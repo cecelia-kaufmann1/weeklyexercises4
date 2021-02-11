@@ -16,109 +16,14 @@ output:
 
 ```r
 library(tidyverse)     # for data cleaning and plotting
-```
-
-```
-## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
-```
-
-```
-## v ggplot2 3.3.3     v purrr   0.3.4
-## v tibble  3.0.4     v dplyr   1.0.2
-## v tidyr   1.1.2     v stringr 1.4.0
-## v readr   1.4.0     v forcats 0.5.0
-```
-
-```
-## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
-```
-
-```r
 library(lubridate)     # for date manipulation
-```
-
-```
-## 
-## Attaching package: 'lubridate'
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     date, intersect, setdiff, union
-```
-
-```r
 library(openintro)     # for the abbr2state() function
-```
-
-```
-## Loading required package: airports
-```
-
-```
-## Loading required package: cherryblossom
-```
-
-```
-## Loading required package: usdata
-```
-
-```r
 library(palmerpenguins)# for Palmer penguin data
 library(maps)          # for map data
-```
-
-```
-## 
-## Attaching package: 'maps'
-```
-
-```
-## The following object is masked from 'package:purrr':
-## 
-##     map
-```
-
-```r
 library(ggmap)         # for mapping points on maps
-```
-
-```
-## Google's Terms of Service: https://cloud.google.com/maps-platform/terms/.
-```
-
-```
-## Please cite ggmap if you use it! See citation("ggmap") for details.
-```
-
-```r
 library(gplots)        # for col2hex() function
-```
-
-```
-## 
-## Attaching package: 'gplots'
-```
-
-```
-## The following object is masked from 'package:stats':
-## 
-##     lowess
-```
-
-```r
 library(RColorBrewer)  # for color palettes
 library(sf)            # for working with spatial data
-```
-
-```
-## Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
-```
-
-```r
 library(leaflet)       # for highly customizable mapping
 library(carData)       # for Minneapolis police stops data
 library(ggthemes)      # for more themes (including theme_map())
@@ -129,29 +34,7 @@ theme_set(theme_minimal())
 ```r
 # Starbucks locations
 Starbucks <- read_csv("https://www.macalester.edu/~ajohns24/Data/Starbucks.csv")
-```
 
-```
-## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   Brand = col_character(),
-##   `Store Number` = col_character(),
-##   `Store Name` = col_character(),
-##   `Ownership Type` = col_character(),
-##   `Street Address` = col_character(),
-##   City = col_character(),
-##   `State/Province` = col_character(),
-##   Country = col_character(),
-##   Postcode = col_character(),
-##   `Phone Number` = col_character(),
-##   Timezone = col_character(),
-##   Longitude = col_double(),
-##   Latitude = col_double()
-## )
-```
-
-```r
 starbucks_us_by_state <- Starbucks %>% 
   filter(Country == "US") %>% 
   count(`State/Province`) %>% 
@@ -172,18 +55,6 @@ favorite_stp_by_lisa <- tibble(
 
 #COVID-19 data from the New York Times
 covid19 <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv")
-```
-
-```
-## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   date = col_date(format = ""),
-##   state = col_character(),
-##   fips = col_character(),
-##   cases = col_double(),
-##   deaths = col_double()
-## )
 ```
 
 ## Put your homework on GitHub!
@@ -223,14 +94,81 @@ These exercises will reiterate what you learned in the "Mapping data with R" tut
 ### Starbucks locations (`ggmap`)
 
   1. Add the `Starbucks` locations to a world map. Add an aesthetic to the world map that sets the color of the points according to the ownership type. What, if anything, can you deduce from this visualization?  
+  
 
-  2. Construct a new map of Starbucks locations in the Twin Cities metro area (approximately the 5 county metro area).  
 
-  3. In the Twin Cities plot, play with the zoom number. What does it do?  (just describe what it does - don't actually include more than one map).  
+```r
+world <- get_stamenmap(
+    bbox = c(left = -180, bottom = -57, right = 179, top = 82.1), 
+    maptype = "terrain",
+    zoom = 2)
+
+# Plot the points on the map
+ggmap(world) + # creates the map "background"
+  geom_point(data = Starbucks, 
+             aes(x = Longitude, 
+                 y = Latitude, 
+                 color = ownership type), 
+             alpha = .3, 
+             size = .1) +
+  theme_map()
+```
+
+```
+## Error: <text>:11:36: unexpected symbol
+## 10:                  y = Latitude, 
+## 11:                  color = ownership type
+##                                        ^
+```
+  
+
+  2. Construct a new map of Starbucks locations in the Twin Cities metro area (approximately the 5 county metro area). 
+  
+
+```r
+twincities <- get_stamenmap(
+    bbox = c(left = -93.6543, bottom = 44.7266, right = -92.7452, top = 45.2018), 
+    maptype = "terrain",
+    zoom = 10)
+
+ggmap(twincities) +
+  geom_point(data = Starbucks,
+             aes(x = Longitude,
+                 y = Latitude),
+             alpha = .6,
+             size = 1.5) +
+  theme_map()
+```
+
+![](weeklyexercises-4_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+  
+
+  3. In the Twin Cities plot, play with the zoom number. What does it do?  (just describe what it does - don't actually include more than one map). 
+When playing with the zoom number, it seems that the map itself (or the terrain underneath the points plotted), becomes distorted.
 
   4. Try a couple different map types (see `get_stamenmap()` in help and look at `maptype`). Include a map with one of the other map types.  
 
+```r
+twincities <- get_stamenmap(
+    bbox = c(left = -93.6543, bottom = 44.7266, right = -92.7452, top = 45.2018), 
+    maptype = "toner-lite",
+    zoom = 10)
+
+ggmap(twincities) +
+  geom_point(data = Starbucks,
+             aes(x = Longitude,
+                 y = Latitude),
+             alpha = .6,
+             size = 1.5) +
+  theme_map()
+```
+
+![](weeklyexercises-4_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+  
+
   5. Add a point to the map that indicates Macalester College and label it appropriately. There are many ways you can do think, but I think it's easiest with the `annotate()` function (see `ggplot2` cheatsheet).
+
+  
 
 ### Choropleth maps with Starbucks data (`geom_map()`)
 
@@ -242,18 +180,7 @@ census_pop_est_2018 <- read_csv("https://www.dropbox.com/s/6txwv3b4ng7pepe/us_ce
   separate(state, into = c("dot","state"), extra = "merge") %>% 
   select(-dot) %>% 
   mutate(state = str_to_lower(state))
-```
 
-```
-## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   state = col_character(),
-##   est_pop_2018 = col_double()
-## )
-```
-
-```r
 starbucks_with_2018_pop_est <-
   starbucks_us_by_state %>% 
   left_join(census_pop_est_2018,
@@ -262,8 +189,21 @@ starbucks_with_2018_pop_est <-
 ```
 
   6. **`dplyr` review**: Look through the code above and describe what each line of code does.
+  
+132: creates data set called "census_pop_est_2018" from the dropbox website. 
+133: separates state column into variables called "dot" and "state" and then "merge" splints at most (2) times. 
+134: select the "dot" variable
+135: create a new variable called "state" that converts the state names to lowercase
+137 and 138: new data set from starbucks_us_by_state called tarbucks_with_2018_pop_est. 
+139: left join the starbucks_us_by_state data with census_pop_est_2018 table 
+140: by the variables titles "state_name" and "state"
+141: mutate to create a new variable titles "starbucks_per_1000" which is number over "est_pop_2018"/10000. 
+
 
   7. Create a choropleth map that shows the number of Starbucks per 10,000 people on a map of the US. Use a new fill color, add points for all Starbucks in the US (except Hawaii and Alaska), add an informative title for the plot, and include a caption that says who created the plot (you!). Make a conclusion about what you observe.
+
+
+  
 
 ### A few of your favorite things (`leaflet`)
 
@@ -298,18 +238,6 @@ data_site <-
   "https://www.macalester.edu/~dshuman1/data/112/2014-Q4-Trips-History-Data.rds" 
 Trips <- readRDS(gzcon(url(data_site)))
 Stations<-read_csv("http://www.macalester.edu/~dshuman1/data/112/DC-Stations.csv")
-```
-
-```
-## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   name = col_character(),
-##   lat = col_double(),
-##   long = col_double(),
-##   nbBikes = col_double(),
-##   nbEmptyDocks = col_double()
-## )
 ```
 
   9. Use the latitude and longitude variables in `Stations` to make a visualization of the total number of departures from each station in the `Trips` data. Use either color or size to show the variation in number of departures. This time, plot the points on top of a map. Use any of the mapping tools you'd like.
