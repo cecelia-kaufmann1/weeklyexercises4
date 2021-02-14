@@ -156,6 +156,19 @@ ggmap(twincities) +
 
   5. Add a point to the map that indicates Macalester College and label it appropriately. There are many ways you can do think, but I think it's easiest with the `annotate()` function (see `ggplot2` cheatsheet).
 ```{r}
+twincities <- get_stamenmap(
+    bbox = c(left = -93.6543, bottom = 44.7266, right = -92.7452, top = 45.2018), 
+    maptype = "toner-lite",
+    zoom = 10)
+
+ggmap(twincities) +
+  geom_point(data = Starbucks,
+             aes(x = Longitude,
+                 y = Latitude),
+             alpha = .6,
+             size = 1.5) +
+  annotate(geom = "twincities", x = 8, y = 9, label = "A")
+  theme_map()
 
 ```
   
@@ -190,9 +203,24 @@ starbucks_with_2018_pop_est <-
 
 
   7. Create a choropleth map that shows the number of Starbucks per 10,000 people on a map of the US. Use a new fill color, add points for all Starbucks in the US (except Hawaii and Alaska), add an informative title for the plot, and include a caption that says who created the plot (you!). Make a conclusion about what you observe.
+  
+  For the most part, the West Coast seems to have the most amount of Starbucks per 10,000 people. 
 
 ```{r}
+states_map <- map_data("state")
 
+# map that colors state by number of Starbucks
+starbucks_with_2018_pop_est %>% 
+  ggplot() +
+  geom_map(map = states_map,
+           aes(map_id = state_name,
+               fill = starbucks_per_10000)) +
+  scale_fill_viridis_c() +
+  #This assures the map looks decently nice:
+  expand_limits(x = states_map$long, y = states_map$lat) + 
+  theme_map() +
+  theme(legend.background = element_blank(),
+        legend.position = "bottom")
 ```
   
 
@@ -201,10 +229,53 @@ starbucks_with_2018_pop_est <-
   8. In this exercise, you are going to create a single map of some of your favorite places! The end result will be one map that satisfies the criteria below. 
 
   * Create a data set using the `tibble()` function that has 10-15 rows of your favorite places. The columns will be the name of the location, the latitude, the longitude, and a column that indicates if it is in your top 3 favorite locations or not. For an example of how to use `tibble()`, look at the `favorite_stp_by_lisa` I created in the data R code chunk at the beginning.  
+```{r}
+favorite_tc_by_cecelia <- tibble(
+  place = c("Milkweed Coffee", "Sift Gluten-Free Bakery", "The Guthrie", 
+            "Minehaha Falls", "Hidden Falls", "South High School",
+            "Electric Fetus", "United Noodles", "Whole Foods", "Pho 79"),
+  long = c(-93.2168, -93.2521, -93.2559, 
+           -93.2110, -93.1543, -93.2446, 
+           -93.2704, -93.2421,-93.1667, 
+           -93.1950),
+  lat = c(44.9486, 44.9199, 44.9782,
+          44.9153, 44.90968, 44.9455,
+          44.96259, 44.9583, 44.9471, 
+          44.9748), 
+  top_three = c("Yes", "No", "No", 
+  "No", "Yes", "No", 
+  "No", "No", "Yes", "No")
+  
+  )
+favorite_tc_by_cecelia
+
+```
+  
 
   * Create a `leaflet` map that uses circles to indicate your favorite places. Label them with the name of the place. Choose the base map you like best. Color your 3 favorite places differently than the ones that are not in your top 3 (HINT: `colorFactor()`). Add a legend that explains what the colors mean.  
+
+```{r}
+leaflet(data = favorite_tc_by_cecelia) %>% #base plot
+  addTiles() %>% #base map - default is openstreet map 
+  addCircles(lng = ~long, 
+             lat = ~lat, 
+             label = ~place) 
+```
+  
   
   * Connect all your locations together with a line in a meaningful way (you may need to order them differently in the original data).  
+  
+Honestly, I drew the lines the way I entered the data and 
+```{r}
+leaflet(data = favorite_tc_by_cecelia) %>% #base plot
+  addTiles() %>% #base map - default is openstreet map 
+  addCircles(lng = ~long, 
+             lat = ~lat, 
+             label = ~place) %>%
+   addPolylines(lng = ~long, 
+               lat = ~lat, 
+               color = col2hex("darkred"))
+```
   
   * If there are other variables you want to add that could enhance your plot, do that now.  
   

@@ -168,6 +168,414 @@ ggmap(twincities) +
 
   5. Add a point to the map that indicates Macalester College and label it appropriately. There are many ways you can do think, but I think it's easiest with the `annotate()` function (see `ggplot2` cheatsheet).
 
+```r
+twincities <- get_stamenmap(
+    bbox = c(left = -93.6543, bottom = 44.7266, right = -92.7452, top = 45.2018), 
+    maptype = "toner-lite",
+    zoom = 10)
+
+ggmap(twincities) +
+  geom_point(data = Starbucks,
+             aes(x = Longitude,
+                 y = Latitude),
+             alpha = .6,
+             size = 1.5) +
+  annotate(geom = "twincities", x = 8, y = 9, label = "A")
+```
+
+```
+## Error: Can't find `geom` called 'twincities'
+```
+
+```r
+  theme_map()
+```
+
+```
+## List of 93
+##  $ line                      :List of 6
+##   ..$ colour       : chr "black"
+##   ..$ size         : num 0.409
+##   ..$ linetype     : num 1
+##   ..$ lineend      : chr "butt"
+##   ..$ arrow        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_line" "element"
+##  $ rect                      :List of 5
+##   ..$ fill         : chr "white"
+##   ..$ colour       : chr "black"
+##   ..$ size         : num 0.409
+##   ..$ linetype     : num 1
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_rect" "element"
+##  $ text                      :List of 11
+##   ..$ family       : chr ""
+##   ..$ face         : chr "plain"
+##   ..$ colour       : chr "black"
+##   ..$ size         : num 9
+##   ..$ hjust        : num 0.5
+##   ..$ vjust        : num 0.5
+##   ..$ angle        : num 0
+##   ..$ lineheight   : num 0.9
+##   ..$ margin       : 'margin' num [1:4] 0points 0points 0points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ title                     : NULL
+##  $ aspect.ratio              : NULL
+##  $ axis.title                : list()
+##   ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+##  $ axis.title.x              :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 1
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 2.25points 0points 0points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.title.x.top          :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 0
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 0points 0points 2.25points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.title.x.bottom       : NULL
+##  $ axis.title.y              :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 1
+##   ..$ angle        : num 90
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 0points 2.25points 0points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.title.y.left         : NULL
+##  $ axis.title.y.right        :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 0
+##   ..$ angle        : num -90
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 0points 0points 0points 2.25points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.text                 : list()
+##   ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+##  $ axis.text.x               :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 1
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 1.8points 0points 0points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.text.x.top           :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : num 0
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 0points 0points 1.8points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.text.x.bottom        : NULL
+##  $ axis.text.y               :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : num 1
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 0points 1.8points 0points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.text.y.left          : NULL
+##  $ axis.text.y.right         :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : num 0
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 0points 0points 0points 1.8points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ axis.ticks                : list()
+##   ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+##  $ axis.ticks.x              : NULL
+##  $ axis.ticks.x.top          : NULL
+##  $ axis.ticks.x.bottom       : NULL
+##  $ axis.ticks.y              : NULL
+##  $ axis.ticks.y.left         : NULL
+##  $ axis.ticks.y.right        : NULL
+##  $ axis.ticks.length         : 'simpleUnit' num 2.25points
+##   ..- attr(*, "unit")= int 8
+##  $ axis.ticks.length.x       : NULL
+##  $ axis.ticks.length.x.top   : NULL
+##  $ axis.ticks.length.x.bottom: NULL
+##  $ axis.ticks.length.y       : NULL
+##  $ axis.ticks.length.y.left  : NULL
+##  $ axis.ticks.length.y.right : NULL
+##  $ axis.line                 : list()
+##   ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+##  $ axis.line.x               : NULL
+##  $ axis.line.x.top           : NULL
+##  $ axis.line.x.bottom        : NULL
+##  $ axis.line.y               : NULL
+##  $ axis.line.y.left          : NULL
+##  $ axis.line.y.right         : NULL
+##  $ legend.background         :List of 5
+##   ..$ fill         : NULL
+##   ..$ colour       : logi NA
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_rect" "element"
+##  $ legend.margin             : 'margin' num [1:4] 4.5points 4.5points 4.5points 4.5points
+##   ..- attr(*, "unit")= int 8
+##  $ legend.spacing            : 'simpleUnit' num 9points
+##   ..- attr(*, "unit")= int 8
+##  $ legend.spacing.x          : NULL
+##  $ legend.spacing.y          : NULL
+##  $ legend.key                :List of 5
+##   ..$ fill         : chr "white"
+##   ..$ colour       : logi NA
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_rect" "element"
+##  $ legend.key.size           : 'simpleUnit' num 1.2lines
+##   ..- attr(*, "unit")= int 3
+##  $ legend.key.height         : NULL
+##  $ legend.key.width          : NULL
+##  $ legend.text               :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : 'rel' num 0.8
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ legend.text.align         : NULL
+##  $ legend.title              :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : num 0
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ legend.title.align        : NULL
+##  $ legend.position           : num [1:2] 0 0
+##  $ legend.direction          : NULL
+##  $ legend.justification      : num [1:2] 0 0
+##  $ legend.box                : NULL
+##  $ legend.box.just           : NULL
+##  $ legend.box.margin         : 'margin' num [1:4] 0cm 0cm 0cm 0cm
+##   ..- attr(*, "unit")= int 1
+##  $ legend.box.background     : list()
+##   ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+##  $ legend.box.spacing        : 'simpleUnit' num 9points
+##   ..- attr(*, "unit")= int 8
+##  $ panel.background          : list()
+##   ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+##  $ panel.border              : list()
+##   ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+##  $ panel.spacing             : 'simpleUnit' num 0lines
+##   ..- attr(*, "unit")= int 3
+##  $ panel.spacing.x           : NULL
+##  $ panel.spacing.y           : NULL
+##  $ panel.grid                : list()
+##   ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+##  $ panel.grid.major          : NULL
+##  $ panel.grid.minor          :List of 6
+##   ..$ colour       : NULL
+##   ..$ size         : 'rel' num 0.5
+##   ..$ linetype     : NULL
+##   ..$ lineend      : NULL
+##   ..$ arrow        : logi FALSE
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_line" "element"
+##  $ panel.grid.major.x        : NULL
+##  $ panel.grid.major.y        : NULL
+##  $ panel.grid.minor.x        : NULL
+##  $ panel.grid.minor.y        : NULL
+##  $ panel.ontop               : logi FALSE
+##  $ plot.background           : list()
+##   ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+##  $ plot.title                :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : 'rel' num 1.2
+##   ..$ hjust        : num 0
+##   ..$ vjust        : num 1
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 0points 0points 4.5points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ plot.title.position       : chr "panel"
+##  $ plot.subtitle             :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : num 0
+##   ..$ vjust        : num 1
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 0points 0points 4.5points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ plot.caption              :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : 'rel' num 0.8
+##   ..$ hjust        : num 1
+##   ..$ vjust        : num 1
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 4.5points 0points 0points 0points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ plot.caption.position     : chr "panel"
+##  $ plot.tag                  :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : 'rel' num 1.2
+##   ..$ hjust        : num 0.5
+##   ..$ vjust        : num 0.5
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ plot.tag.position         : chr "topleft"
+##  $ plot.margin               : 'margin' num [1:4] 4.5points 4.5points 4.5points 4.5points
+##   ..- attr(*, "unit")= int 8
+##  $ strip.background          :List of 5
+##   ..$ fill         : chr "grey85"
+##   ..$ colour       : chr "grey20"
+##   ..$ size         : NULL
+##   ..$ linetype     : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_rect" "element"
+##  $ strip.background.x        : NULL
+##  $ strip.background.y        : NULL
+##  $ strip.placement           : chr "inside"
+##  $ strip.text                :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : chr "grey10"
+##   ..$ size         : 'rel' num 0.8
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : 'margin' num [1:4] 3.6points 3.6points 3.6points 3.6points
+##   .. ..- attr(*, "unit")= int 8
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ strip.text.x              : NULL
+##  $ strip.text.y              :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : num -90
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  $ strip.switch.pad.grid     : 'simpleUnit' num 2.25points
+##   ..- attr(*, "unit")= int 8
+##  $ strip.switch.pad.wrap     : 'simpleUnit' num 2.25points
+##   ..- attr(*, "unit")= int 8
+##  $ strip.text.y.left         :List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : NULL
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : num 90
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi TRUE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  - attr(*, "class")= chr [1:2] "theme" "gg"
+##  - attr(*, "complete")= logi TRUE
+##  - attr(*, "validate")= logi TRUE
+```
   
 
 ### Choropleth maps with Starbucks data (`geom_map()`)
@@ -201,8 +609,28 @@ starbucks_with_2018_pop_est <-
 
 
   7. Create a choropleth map that shows the number of Starbucks per 10,000 people on a map of the US. Use a new fill color, add points for all Starbucks in the US (except Hawaii and Alaska), add an informative title for the plot, and include a caption that says who created the plot (you!). Make a conclusion about what you observe.
+  
+  For the most part, the West Coast seems to have the most amount of Starbucks per 10,000 people. 
 
 
+```r
+states_map <- map_data("state")
+
+# map that colors state by number of Starbucks
+starbucks_with_2018_pop_est %>% 
+  ggplot() +
+  geom_map(map = states_map,
+           aes(map_id = state_name,
+               fill = starbucks_per_10000)) +
+  scale_fill_viridis_c() +
+  #This assures the map looks decently nice:
+  expand_limits(x = states_map$long, y = states_map$lat) + 
+  theme_map() +
+  theme(legend.background = element_blank(),
+        legend.position = "bottom")
+```
+
+![](weeklyexercises-4_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
   
 
 ### A few of your favorite things (`leaflet`)
@@ -211,7 +639,47 @@ starbucks_with_2018_pop_est <-
 
   * Create a data set using the `tibble()` function that has 10-15 rows of your favorite places. The columns will be the name of the location, the latitude, the longitude, and a column that indicates if it is in your top 3 favorite locations or not. For an example of how to use `tibble()`, look at the `favorite_stp_by_lisa` I created in the data R code chunk at the beginning.  
 
+```r
+favorite_tc_by_cecelia <- tibble(
+  place = c("Milkweed Coffee", "Sift Gluten-Free Bakery", "The Guthrie", 
+            "Minehaha Falls", "Hidden Falls", "South High School",
+            "Electric Fetus", "United Noodles", "Whole Foods", "Pho 79"),
+  long = c(-93.2168, -93.2521, -93.2559, 
+           -93.2110, -93.1543, -93.2446, 
+           -93.2704, -93.2421,-93.1667, 
+           -93.1950),
+  lat = c(44.9486, 44.9199, 44.9782,
+          44.9153, 44.90968, 44.9455,
+          44.96259, 44.9583, 44.9471, 
+          44.9748), 
+  top_three = c("Yes", "No", "No", 
+  "No", "Yes", "No", 
+  "No", "No", "Yes", "No")
+  
+  )
+favorite_tc_by_cecelia
+```
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["place"],"name":[1],"type":["chr"],"align":["left"]},{"label":["long"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["lat"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["top_three"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"Milkweed Coffee","2":"-93.2168","3":"44.94860","4":"Yes"},{"1":"Sift Gluten-Free Bakery","2":"-93.2521","3":"44.91990","4":"No"},{"1":"The Guthrie","2":"-93.2559","3":"44.97820","4":"No"},{"1":"Minehaha Falls","2":"-93.2110","3":"44.91530","4":"No"},{"1":"Hidden Falls","2":"-93.1543","3":"44.90968","4":"Yes"},{"1":"South High School","2":"-93.2446","3":"44.94550","4":"No"},{"1":"Electric Fetus","2":"-93.2704","3":"44.96259","4":"No"},{"1":"United Noodles","2":"-93.2421","3":"44.95830","4":"No"},{"1":"Whole Foods","2":"-93.1667","3":"44.94710","4":"Yes"},{"1":"Pho 79","2":"-93.1950","3":"44.97480","4":"No"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+  
+
   * Create a `leaflet` map that uses circles to indicate your favorite places. Label them with the name of the place. Choose the base map you like best. Color your 3 favorite places differently than the ones that are not in your top 3 (HINT: `colorFactor()`). Add a legend that explains what the colors mean.  
+
+```r
+leaflet(data = favorite_tc_by_cecelia) %>% #base plot
+  addTiles() %>% #base map - default is openstreet map 
+  addCircles(lng = ~long, 
+             lat = ~lat, 
+             label = ~place)
+```
+
+<!--html_preserve--><div id="htmlwidget-908adfbeaac0e76e12ce" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-908adfbeaac0e76e12ce">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addCircles","args":[[44.9486,44.9199,44.9782,44.9153,44.90968,44.9455,44.96259,44.9583,44.9471,44.9748],[-93.2168,-93.2521,-93.2559,-93.211,-93.1543,-93.2446,-93.2704,-93.2421,-93.1667,-93.195],10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2},null,null,["Milkweed Coffee","Sift Gluten-Free Bakery","The Guthrie","Minehaha Falls","Hidden Falls","South High School","Electric Fetus","United Noodles","Whole Foods","Pho 79"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null,null]}],"limits":{"lat":[44.90968,44.9782],"lng":[-93.2704,-93.1543]}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+  
   
   * Connect all your locations together with a line in a meaningful way (you may need to order them differently in the original data).  
   
